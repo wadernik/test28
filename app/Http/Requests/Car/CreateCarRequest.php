@@ -2,6 +2,9 @@
 
 namespace App\Http\Requests\Car;
 
+use App\Models\Manufacturer\Manufacturer;
+use App\Repositories\CarModel\CarModelRepositoryInterface;
+use App\Rules\CarModelExistsAndCorrespondsRule;
 use Illuminate\Foundation\Http\FormRequest;
 use function __;
 
@@ -12,13 +15,17 @@ class CreateCarRequest extends FormRequest
         return true;
     }
 
-    public function rules(): array
+    public function rules(CarModelRepositoryInterface $repository): array
     {
         return [
-            'manufacturer_id' => 'required|integer|min:1',
-            'model_id' => 'required|integer|min:1',
+            'manufacturer_id' => 'required|integer|min:1|exists:' . Manufacturer::class . ',id',
+            'model_id' => [
+                'required',
+                'integer',
+                new CarModelExistsAndCorrespondsRule($repository)
+            ],
             'release_year' => 'sometimes|date_format:Y|nullable',
-            'mileage' => 'sometimes|integer|min:1|nullable',
+            'mileage' => 'sometimes|integer|min:0|nullable',
             'color' => 'sometimes|string|max:64|nullable',
         ];
     }

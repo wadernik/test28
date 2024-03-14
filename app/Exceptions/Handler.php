@@ -2,8 +2,10 @@
 
 namespace App\Exceptions;
 
+use App\Http\Responses\ApiResponse;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
-use Throwable;
+use RuntimeException;
+use Symfony\Component\HttpFoundation\Response;
 
 class Handler extends ExceptionHandler
 {
@@ -23,8 +25,12 @@ class Handler extends ExceptionHandler
      */
     public function register(): void
     {
-        $this->reportable(function (Throwable $e) {
-            //
+        $this->renderable(function (RuntimeException $exception) {
+            return ApiResponse::error(code: Response::HTTP_UNPROCESSABLE_ENTITY, message: $exception->getMessage());
+        });
+
+        $this->renderable(function (WrongCredentialsException $exception) {
+            return ApiResponse::error(code: Response::HTTP_UNAUTHORIZED, message: $exception->getMessage());
         });
     }
 }

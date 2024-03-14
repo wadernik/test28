@@ -6,8 +6,8 @@ namespace App\Models\User;
 
 use App\Models\Car\Car;
 use App\Models\Role\Role;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -51,9 +51,9 @@ class User extends Authenticatable implements UserInterface
         'password' => 'hashed',
     ];
 
-    public function role(): HasOne
+    public function role(): BelongsTo
     {
-        return $this->hasOne(Role::class);
+        return $this->belongsTo(Role::class);
     }
 
     public function permissions(): Collection

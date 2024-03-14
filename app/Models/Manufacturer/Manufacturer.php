@@ -13,7 +13,7 @@ final class Manufacturer extends Model implements ManufacturerInterface
 
     public $timestamps = false;
 
-    public $table = 'car_manufacturer';
+    public $table = 'car_manufacturers';
 
     protected $fillable = [
         'name',

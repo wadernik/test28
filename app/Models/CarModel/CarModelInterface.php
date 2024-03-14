@@ -8,7 +8,8 @@ use App\Models\Manufacturer\ManufacturerInterface;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
- * @property string $name
+ * @property string                $name
+ * @property int                   $manufacturer_id
  * @property ManufacturerInterface $manufacturer
  */
 interface CarModelInterface

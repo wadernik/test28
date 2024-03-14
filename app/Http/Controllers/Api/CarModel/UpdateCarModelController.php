@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Api\CarModel;
 
-use App\DTOs\CarModel\CreateCarModelDTO;
+use App\DTOs\CarModel\UpdateCarModelDTO;
 use App\Http\Controllers\Api\AbstractApiController;
 use App\Http\Requests\CarModel\UpdateCarModelRequest;
 use App\Http\Responses\ApiResponse;
@@ -22,13 +22,13 @@ final class UpdateCarModelController extends AbstractApiController
         CarModelManagerInterface $manager
     ): JsonResponse
     {
-        if (!$this->isAllowed('models.edit')) {
-            return ApiResponse::error(Response::HTTP_FORBIDDEN);
+        if (!$carModel = $repository->findOneById($id)) {
+            return ApiResponse::error(Response::HTTP_NOT_FOUND);
         }
 
-        $dto = new CreateCarModelDTO($request->validated());
+        $dto = new UpdateCarModelDTO($request->validated());
 
-        $carModel = $manager->create($dto);
+        $carModel = $manager->update($carModel, $dto);
 
         return ApiResponse::success($carModel->toArray());
     }

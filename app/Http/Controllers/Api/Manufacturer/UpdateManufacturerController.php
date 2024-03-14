@@ -22,10 +22,6 @@ final class UpdateManufacturerController extends AbstractApiController
         ManufacturerManagerInterface $manager
     ): JsonResponse
     {
-        if (!$this->isAllowed('manufacturers.edit')) {
-            return ApiResponse::error(Response::HTTP_FORBIDDEN);
-        }
-
         if (!$manufacturer = $repository->findOneById($id)) {
             return ApiResponse::error(Response::HTTP_NOT_FOUND);
         }

@@ -17,10 +17,6 @@ final class GetCarModelController extends AbstractApiController
         CarModelRepositoryInterface $repository
     ): JsonResponse
     {
-        if (!$this->isAllowed('models.view')) {
-            return ApiResponse::error(Response::HTTP_FORBIDDEN);
-        }
-
         if (!$carModel = $repository->findOneById($id)) {
             return ApiResponse::error(Response::HTTP_NOT_FOUND);
         }

@@ -2,8 +2,6 @@
 
 namespace App\Providers;
 
-use App\Checker\AllCarsExistChecker;
-use App\Checker\AllCarsExistCheckerInterface;
 use App\Managers\Car\CarManager;
 use App\Managers\Car\CarManagerInterface;
 use App\Managers\CarModel\CarModelManager;
@@ -18,6 +16,8 @@ use App\Repositories\Manufacturer\ManufacturerRepository;
 use App\Repositories\Manufacturer\ManufacturerRepositoryInterface;
 use App\Repositories\UserCarFavorite\UserCarFavoriteRepository;
 use App\Repositories\UserCarFavorite\UserCarFavoriteRepositoryInterface;
+use App\Service\Auth\AuthService;
+use App\Service\Auth\AuthServiceInterface;
 use App\Service\User\Favorite\UserCarFavoriteUpdaterService;
 use App\Service\User\Favorite\UserCarFavoriteUpdaterServiceInterface;
 use App\Service\User\Favorite\UserFavoriteCarsRetriever;
@@ -57,16 +57,14 @@ class AppServiceProvider extends ServiceProvider
          */
         $this->app->bind(UserCarFavoriteUpdaterServiceInterface::class, UserCarFavoriteUpdaterService::class);
 
-        $this->app->bind(AllCarsExistCheckerInterface::class, function (): AllCarsExistChecker {
-            return new AllCarsExistChecker(app()->make(CarRepositoryInterface::class));
-        });
-
         $this->app->bind(UserFavoriteCarsRetrieverInterface::class, function (): UserFavoriteCarsRetriever {
             return new UserFavoriteCarsRetriever(
                 app()->make(UserCarFavoriteRepositoryInterface::class),
                 app()->make(CarRepositoryInterface::class)
             );
         });
+
+        $this->app->bind(AuthServiceInterface::class, AuthService::class);
     }
 
     /**

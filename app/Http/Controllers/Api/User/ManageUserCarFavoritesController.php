@@ -10,7 +10,6 @@ use App\Http\Requests\User\Favorite\UpdateUserCarFavoriteRequest;
 use App\Http\Responses\ApiResponse;
 use App\Service\User\Favorite\UserCarFavoriteUpdaterServiceInterface;
 use Illuminate\Http\JsonResponse;
-use Symfony\Component\HttpFoundation\Response;
 
 final class ManageUserCarFavoritesController extends AbstractApiController
 {
@@ -19,10 +18,6 @@ final class ManageUserCarFavoritesController extends AbstractApiController
         UserCarFavoriteUpdaterServiceInterface $manager
     ): JsonResponse
     {
-        if (!$this->isAllowed('favorites.edit')) {
-            return ApiResponse::error(Response::HTTP_FORBIDDEN);
-        }
-
         $dto = new UserCarFavoriteDTO($request->validated());
 
         $manager->manage($this->user(), $dto);

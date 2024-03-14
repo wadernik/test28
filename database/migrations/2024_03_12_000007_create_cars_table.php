@@ -31,6 +31,7 @@ return new class extends Migration
                 ->on('car_models')
                 ->onDelete('cascade');
 
+            $table->timestamps();
             $table->softDeletes();
         });
     }

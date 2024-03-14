@@ -14,10 +14,6 @@ final class GetCarController extends AbstractApiController
 {
     public function __invoke(int $id, CarRepositoryInterface $repository): JsonResponse
     {
-        if (!$this->isAllowed('cars.view')) {
-            return ApiResponse::error(Response::HTTP_FORBIDDEN);
-        }
-
         if (!$car = $repository->findOneById($id)) {
             return ApiResponse::error(Response::HTTP_NOT_FOUND);
         }

@@ -9,7 +9,6 @@ use App\Http\Requests\CarModel\ListCarModelRequest;
 use App\Http\Responses\ApiResponse;
 use App\Repositories\CarModel\CarModelRepositoryInterface;
 use Illuminate\Http\JsonResponse;
-use Symfony\Component\HttpFoundation\Response;
 
 final class ListCarModelController extends AbstractApiController
 {
@@ -18,10 +17,6 @@ final class ListCarModelController extends AbstractApiController
         CarModelRepositoryInterface $repository
     ): JsonResponse
     {
-        if (!$this->isAllowed('models.view')) {
-            return ApiResponse::error(Response::HTTP_FORBIDDEN);
-        }
-
         $requestData = $request->validated();
 
         $sort = [
@@ -31,9 +26,9 @@ final class ListCarModelController extends AbstractApiController
         $limit = $requestData['limit'] ?? null;
         $offset = $requestData['page'] ?? null;
 
-        $items = $repository->findAll($sort, $limit, $offset);
+        $items = $repository->findAll(sort: $sort, limit: $limit, offset: $offset);
         $total = $repository->count();
 
-        return ApiResponse::success(data: $items, total: $total);
+        return ApiResponse::success(data: $items->toArray(), total: $total);
     }
 }

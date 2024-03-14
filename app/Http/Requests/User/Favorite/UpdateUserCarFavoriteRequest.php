@@ -2,6 +2,8 @@
 
 namespace App\Http\Requests\User\Favorite;
 
+use App\Repositories\Car\CarRepositoryInterface;
+use App\Rules\CarsExistRule;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateUserCarFavoriteRequest extends FormRequest
@@ -11,11 +13,10 @@ class UpdateUserCarFavoriteRequest extends FormRequest
         return true;
     }
 
-    public function rules(): array
+    public function rules(CarRepositoryInterface $repository): array
     {
         return [
-            'cars' => 'required|array',
-            'cars.*.id' => 'required|int|min:1',
+            'cars' => ['required', 'array', new CarsExistRule($repository)],
         ];
     }
 }

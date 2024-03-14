@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\CarModel;
 
+use App\Models\Manufacturer\Manufacturer;
 use Illuminate\Foundation\Http\FormRequest;
 use function __;
 
@@ -16,7 +17,7 @@ class CreateCarModelRequest extends FormRequest
     {
         return [
             'name' => 'required|string|max:255',
-            'manufacturer_id' => 'required|int|min:1',
+            'manufacturer_id' => 'required|integer|min:1|exists:' . Manufacturer::class . ',id',
         ];
     }
 

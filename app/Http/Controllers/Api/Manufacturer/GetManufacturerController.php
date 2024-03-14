@@ -17,10 +17,6 @@ final class GetManufacturerController extends AbstractApiController
         ManufacturerRepositoryInterface $repository,
     ): JsonResponse
     {
-        if (!$this->isAllowed('manufacturers.view')) {
-            return ApiResponse::error(Response::HTTP_FORBIDDEN);
-        }
-
         if (!$manufacturer = $repository->findOneById($id)) {
             return ApiResponse::error(Response::HTTP_NOT_FOUND);
         }

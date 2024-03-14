@@ -19,7 +19,7 @@ class UsersTableSeeder extends Seeder
             [
                 'id' => 1,
                 'name' => Str::random(10),
-                'username' => Str::random(5),
+                'username' => 'admin',
                 'password' => Hash::make('password'), // или bcrypt
                 'role_id' => Role::ROLE_ADMIN,
             ],

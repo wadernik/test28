@@ -10,6 +10,7 @@ use function collect;
 abstract class AbstractApiController extends Controller
 {
     /**
+     * @deprecated
      * @param string $permission
      * @return bool
      */

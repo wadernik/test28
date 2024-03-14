@@ -27,6 +27,9 @@ return new class extends Migration
                 ->references('id')
                 ->on('cars')
                 ->onDelete('cascade');
+
+            $table->timestamps();
+            $table->softDeletes();
         });
     }
 

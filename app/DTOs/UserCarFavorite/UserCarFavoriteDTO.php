@@ -19,6 +19,6 @@ final class UserCarFavoriteDTO implements UserCarFavoriteDTOInterface
 
     public function toArray(): array
     {
-        return $this->attributes;
+        return $this->attributes['cars'] ?? [];
     }
 }

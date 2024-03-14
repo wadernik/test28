@@ -15,10 +15,6 @@ final class DeleteCarController extends AbstractApiController
 {
     public function __invoke(int $id, CarRepositoryInterface $repository, CarManagerInterface $manager): JsonResponse
     {
-        if (!$this->isAllowed('cars.delete')) {
-            return ApiResponse::error(Response::HTTP_FORBIDDEN);
-        }
-
         if (!$car = $repository->findOneById($id)) {
             return ApiResponse::error(Response::HTTP_NOT_FOUND);
         }

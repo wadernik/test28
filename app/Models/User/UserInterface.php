@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace App\Models\User;
 
 use App\Models\Role\RoleInterface;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Support\Collection;
 
 /**
@@ -17,10 +17,11 @@ use Illuminate\Support\Collection;
  * @property int    $role_id
  *
  * @property RoleInterface $role
+ * @property Collection $favorites
  */
 interface UserInterface
 {
-    public function role(): HasOne;
+    public function role(): BelongsTo;
 
     /**
      * @return Collection<string>

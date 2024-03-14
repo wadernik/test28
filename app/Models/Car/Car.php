@@ -23,6 +23,10 @@ final class Car extends Model implements CarInterface
         'color',
     ];
 
+    protected $hidden = [
+        'pivot',
+    ];
+
     public function manufacturer(): BelongsTo
     {
         return $this->belongsTo(Manufacturer::class, 'manufacturer_id');

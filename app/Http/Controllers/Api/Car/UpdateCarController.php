@@ -22,10 +22,6 @@ final class UpdateCarController extends AbstractApiController
         CarManagerInterface $manager
     ): JsonResponse
     {
-        if (!$this->isAllowed('cars.edit')) {
-            return ApiResponse::error(Response::HTTP_FORBIDDEN);
-        }
-
         if (!$car = $repository->findOneById($id)) {
             return ApiResponse::error(Response::HTTP_NOT_FOUND);
         }
